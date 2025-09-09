@@ -1,0 +1,30 @@
+syntax = "proto3";
+package protocol.public_project;
+
+option go_package = "github.com/codedancewth/public_project/internal/proto/public_project";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
+
+message HelloReq{
+  int64 h_m = 1;
+}
+
+message HelloRsp {
+}
+
+
+service AppService {
+  // 测试接口
+  rpc Hello(HelloReq) returns (HelloRsp) {
+    option (google.api.http) = {
+      post:"/public_project/rpc/v1/hello"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "测试登入接口"
+      description: "",
+      tags: ["out"]
+    };
+  };
+}

@@ -1,0 +1,61 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "public_project/app.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AppService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/public_project/rpc/v1/hello": {
+      "post": {
+        "summary": "测试登入接口",
+        "operationId": "AppService_Hello",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/public_projectHelloRsp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/public_projectHelloReq"
+            }
+          }
+        ],
+        "tags": [
+          "out"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "public_projectHelloReq": {
+      "type": "object",
+      "properties": {
+        "h_m": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "public_projectHelloRsp": {
+      "type": "object"
+    }
+  }
+}
