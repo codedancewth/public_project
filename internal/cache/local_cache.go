@@ -17,7 +17,7 @@ func InitLocalCache(url string, defaultTTL time.Duration) {
 	localCacheUse = &LocalCache{
 		localCache: cache.New(time.Hour, 5*time.Second),
 		url:        url,
-		defaultTTL: time.Minute,
+		defaultTTL: defaultTTL,
 	}
 }
 
@@ -25,11 +25,11 @@ func NewLocalCacheUseCase() *LocalCache {
 	return localCacheUse
 }
 
-func (c *LocalCache) set(key string, value interface{}, ttl time.Duration) {
+func (c *LocalCache) Set(key string, value interface{}, ttl time.Duration) {
 	c.localCache.Set(key, value, ttl)
 }
 
-func (c *LocalCache) get(key string) (interface{}, bool) {
+func (c *LocalCache) Get(key string) (interface{}, bool) {
 	get, b := c.localCache.Get(key)
 	if b {
 		return get, b

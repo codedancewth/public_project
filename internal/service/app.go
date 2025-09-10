@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"github.com/codedancewth/public_project/internal/cache"
 	"github.com/codedancewth/public_project/proto/public_project"
 	"github.com/go-redis/redis/v8"
 	"github.com/sirupsen/logrus"
@@ -29,6 +30,7 @@ func NewAppService() public_project.AppServiceServer {
 	options := []option{
 		withMysqlDB(),
 		withRedis(),
+		withCacheInit(),
 		//withConnectMongo(),
 	}
 	for _, o := range options {
@@ -72,5 +74,11 @@ func withRedis() option {
 			logrus.Panicf("withRedis ping redis failed. %s", err)
 		}
 		imp.rc = r
+	}
+}
+
+func withCacheInit() option {
+	return func(imp *PublicProject) {
+		cache.InitLocalCache("", time.Minute)
 	}
 }
