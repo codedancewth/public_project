@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"github.com/codedancewth/public_project/internal/proto/public_project"
+	"github.com/codedancewth/public_project/proto/public_project"
 	"github.com/go-redis/redis/v8"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"

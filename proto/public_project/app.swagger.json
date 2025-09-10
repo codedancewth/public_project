@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "internal/proto/public_project/app.proto",
+    "title": "proto/public_project/app.proto",
     "version": "version not set"
   },
   "tags": [

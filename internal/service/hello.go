@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/codedancewth/public_project/internal/dao"
-	"github.com/codedancewth/public_project/internal/proto/public_project"
 	"github.com/codedancewth/public_project/pkg/utils"
+	"github.com/codedancewth/public_project/proto/public_project"
 	"time"
 )
 

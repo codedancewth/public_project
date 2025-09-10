@@ -11,4 +11,4 @@ all: account agent relation room_pk wish_gift base_proto chat\
 
 
 publicproject:
-	powerproto build -r -p $(PWD)/internal/proto/public_project
+	powerproto build -r -p $(PWD)/proto/public_project
