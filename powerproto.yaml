@@ -1,0 +1,36 @@
+scopes:
+    - ./
+protoc: v3.20.1
+protocWorkDir: ""
+plugins:
+    protoc-gen-go: google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.0
+    protoc-gen-go-grpc: google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2.0
+    protoc-gen-grpc-gateway: github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.5.0
+    protoc-gen-openapiv2: github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.11.3
+repositories:
+    GOOGLE_APIS: https://github.com/googleapis/googleapis@75e9812478607db997376ccea247dd6928f70f45
+options:
+    - --go_out=.
+    - --go_opt=paths=source_relative
+    - --go-grpc_out=.
+    - --proto_path=protocol
+    - --grpc-gateway_out=.
+    - --grpc-gateway_opt=paths=source_relative
+    - --go-grpc_opt=paths=source_relative
+    - --openapiv2_out=.
+    - --openapiv2_opt=json_names_for_fields=false
+    - --openapiv2_opt=logtostderr=true
+    - --openapiv2_opt=enums_as_ints=true # 枚举值默认以int类型出现
+    - --openapiv2_opt=version=true
+    - --openapiv2_opt=disable_default_errors=true #
+    - --openapiv2_opt=omit_enum_default_value=true # 忽略默认枚举值
+    - --validate_out=paths=source_relative,lang=go:. # 新加上参数校验框架
+importPaths:
+    - .
+    - third_party
+    - $GOPATH
+    - $POWERPROTO_INCLUDE
+    - $SOURCE_RELATIVE
+    - $GOOGLE_APIS/github.com/googleapis/googleapis
+postActions: []
+postShell: ""
