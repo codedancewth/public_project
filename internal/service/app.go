@@ -1,9 +1,13 @@
 package service
 
 import (
+	"context"
 	"github.com/codedancewth/public_project/internal/proto/public_project"
+	"github.com/go-redis/redis/v8"
+	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"time"
 )
 
 const DbURL = "root:123456@tcp(127.0.0.1:3306)/project?charset=utf8mb4&parseTime=True&loc=Local"
@@ -14,7 +18,7 @@ type PublicProject struct {
 	public_project.UnimplementedAppServiceServer
 	gDB *gorm.DB // 主库
 	//mongoDB       *mongo.Client
-	//rc            *redis.Client
+	rc *redis.Client
 }
 
 type option func(imp *PublicProject)
@@ -23,8 +27,8 @@ type option func(imp *PublicProject)
 func NewAppService() public_project.AppServiceServer {
 	imp := &PublicProject{}
 	options := []option{
-		withEasyDB(),
-		//withRedis(),
+		withMysqlDB(),
+		withRedis(),
 		//withConnectMongo(),
 	}
 	for _, o := range options {
@@ -35,7 +39,7 @@ func NewAppService() public_project.AppServiceServer {
 	return imp
 }
 
-func withEasyDB() option {
+func withMysqlDB() option {
 	return func(imp *PublicProject) {
 		var err error
 		mysqlDB, err := gorm.Open(mysql.Open(DbURL), &gorm.Config{})
@@ -51,5 +55,22 @@ func withEasyDB() option {
 		db.SetMaxIdleConns(50)
 
 		imp.gDB = mysqlDB
+	}
+}
+
+func withRedis() option {
+	return func(imp *PublicProject) {
+		r := redis.NewClient(&redis.Options{
+			Network:     "tcp",
+			Addr:        "127.0.0.1:6379",
+			Password:    "",
+			DB:          0,
+			PoolSize:    10,
+			IdleTimeout: time.Minute * 30,
+		})
+		if err := r.Ping(context.Background()).Err(); err != nil {
+			logrus.Panicf("withRedis ping redis failed. %s", err)
+		}
+		imp.rc = r
 	}
 }

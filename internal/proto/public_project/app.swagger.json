@@ -46,13 +46,7 @@
   },
   "definitions": {
     "public_projectHelloReq": {
-      "type": "object",
-      "properties": {
-        "h_m": {
-          "type": "string",
-          "format": "int64"
-        }
-      }
+      "type": "object"
     },
     "public_projectHelloRsp": {
       "type": "object"

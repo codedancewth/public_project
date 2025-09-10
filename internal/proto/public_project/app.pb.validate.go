@@ -40,8 +40,6 @@ func (m *HelloReq) Validate() error {
 		return nil
 	}
 
-	// no validation rules for HM
-
 	return nil
 }
 

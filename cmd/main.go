@@ -35,6 +35,7 @@ func main() {
 	flag.StringVar(&configFile, "c", "", "Configuration file.")
 	flag.Parse()
 
+	// 初始化对应的中间件和配置
 	imp := service.NewAppService()
 
 	// start gRPC server
