@@ -7,9 +7,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"net/http"
-	"os"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -38,14 +36,6 @@ func GetTimeId() int64 {
 		timeId = time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()).Unix() // 设置为当天的 00:00:00
 	)
 	return timeId
-}
-
-// IsEnvTest 判断环境是否是测试
-func IsEnvTest() bool {
-	if os.Getenv("stage") == "test" || os.Getenv("stage") == "dev" || os.Getenv("stage") == "" {
-		return true
-	}
-	return false
 }
 
 // ChunkSlice chunk函数
@@ -158,62 +148,13 @@ func DingDingSendMsg(param *DingDingMsgSt, URL string) (err error) {
 	return
 }
 
-func DingDingSendText(URL, content string, atMobiles []string) (err error) {
-	param := &DingDingMsgSt{
-		MsgType: DINGDING_MSG_TYPE_TEXT,
-	}
-	param.Text.Content = content
-	param.At.AtMobiles = atMobiles
-	return DingDingSendMsg(param, URL)
-}
-
-type VersionCmp struct {
-	ver string
-}
-
-func NewVersionCmp(ver string) *VersionCmp {
-	v := &VersionCmp{}
-
-	v.ver = v.fmtver(ver)
-	return v
-}
-
-func (m *VersionCmp) fmtver(ver string) string {
-	pvs := strings.Split(ver, ".")
-
-	rv := ""
-	for _, pv := range pvs {
-		rv += fmt.Sprintf("%020s", pv)
-	}
-
-	return rv
-
-}
-
-const (
-	Android int32 = 0
-	Ios     int32 = 1
-)
-
-func IsHigherVer(ver string, deviceType int32, minAndroidVer, minIosVer string) bool {
-	appVerCmp := NewVersionCmp(ver)
-	if deviceType == Ios {
-		if appVerCmp.Gte(minIosVer) {
-			return true
-		}
-	} else if deviceType == Android {
-		if appVerCmp.Gte(minAndroidVer) {
-			return true
-		}
-	}
-	return false
-}
-
-func (m *VersionCmp) Gte(ver string) bool {
-	return m.ver >= m.fmtver(ver)
-}
-
 func GetMiliSecondString() string {
 	mili := time.Now().UnixNano() / 1e3
 	return strconv.Itoa(int(mili))
+}
+
+// UtilJsonMarshal 直接转化为string
+func UtilJsonMarshal(any interface{}) string {
+	marshal, _ := json.Marshal(any)
+	return string(marshal)
 }

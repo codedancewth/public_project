@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-const DBURL = ""
+const DbURL = "root:123456@tcp(127.0.0.1:3306)/project?charset=utf8mb4&parseTime=True&loc=Local"
 
 var DImp *PublicProject
 
@@ -23,7 +23,7 @@ type option func(imp *PublicProject)
 func NewAppService() public_project.AppServiceServer {
 	imp := &PublicProject{}
 	options := []option{
-		//withEasyDB(),
+		withEasyDB(),
 		//withRedis(),
 		//withConnectMongo(),
 	}
@@ -38,7 +38,7 @@ func NewAppService() public_project.AppServiceServer {
 func withEasyDB() option {
 	return func(imp *PublicProject) {
 		var err error
-		mysqlDB, err := gorm.Open(mysql.Open(DBURL), &gorm.Config{})
+		mysqlDB, err := gorm.Open(mysql.Open(DbURL), &gorm.Config{})
 		if err != nil {
 			return
 		}
@@ -49,5 +49,7 @@ func withEasyDB() option {
 		}
 		db.SetMaxOpenConns(30)
 		db.SetMaxIdleConns(50)
+
+		imp.gDB = mysqlDB
 	}
 }
