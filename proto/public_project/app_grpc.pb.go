@@ -24,6 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 type AppServiceClient interface {
 	// 测试接口
 	Hello(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*HelloRsp, error)
+	// 登录接口
+	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginRep, error)
 }
 
 type appServiceClient struct {
@@ -43,12 +45,23 @@ func (c *appServiceClient) Hello(ctx context.Context, in *HelloReq, opts ...grpc
 	return out, nil
 }
 
+func (c *appServiceClient) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginRep, error) {
+	out := new(LoginRep)
+	err := c.cc.Invoke(ctx, "/protocol.public_project.AppService/Login", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppServiceServer is the server API for AppService service.
 // All implementations must embed UnimplementedAppServiceServer
 // for forward compatibility
 type AppServiceServer interface {
 	// 测试接口
 	Hello(context.Context, *HelloReq) (*HelloRsp, error)
+	// 登录接口
+	Login(context.Context, *LoginReq) (*LoginRep, error)
 	mustEmbedUnimplementedAppServiceServer()
 }
 
@@ -58,6 +71,9 @@ type UnimplementedAppServiceServer struct {
 
 func (UnimplementedAppServiceServer) Hello(context.Context, *HelloReq) (*HelloRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
+}
+func (UnimplementedAppServiceServer) Login(context.Context, *LoginReq) (*LoginRep, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
 func (UnimplementedAppServiceServer) mustEmbedUnimplementedAppServiceServer() {}
 
@@ -90,6 +106,24 @@ func _AppService_Hello_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppService_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppServiceServer).Login(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.public_project.AppService/Login",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppServiceServer).Login(ctx, req.(*LoginReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppService_ServiceDesc is the grpc.ServiceDesc for AppService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -100,6 +134,10 @@ var AppService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Hello",
 			Handler:    _AppService_Hello_Handler,
+		},
+		{
+			MethodName: "Login",
+			Handler:    _AppService_Login_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

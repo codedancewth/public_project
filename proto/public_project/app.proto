@@ -12,6 +12,18 @@ message HelloReq{
 message HelloRsp {
 }
 
+message LoginReq{
+  string username = 1;
+  string password = 2;
+}
+
+message LoginRep {
+  string token = 1;
+  string refresh_token = 2;
+  int64 expires_in = 3;
+}
+
+
 
 service AppService {
   // 测试接口
@@ -26,4 +38,19 @@ service AppService {
       tags: ["out"]
     };
   };
+
+
+  // 登录接口
+  rpc Login(LoginReq) returns (LoginRep) {
+    option (google.api.http) = {
+      post:"/public_project/v1/login"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "登录接口"
+      description: "",
+      tags: ["out"]
+    };
+  };
+
 }

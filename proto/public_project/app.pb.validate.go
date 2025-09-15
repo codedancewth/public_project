@@ -160,3 +160,141 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = HelloRspValidationError{}
+
+// Validate checks the field values on LoginReq with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *LoginReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Username
+
+	// no validation rules for Password
+
+	return nil
+}
+
+// LoginReqValidationError is the validation error returned by
+// LoginReq.Validate if the designated constraints aren't met.
+type LoginReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LoginReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LoginReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LoginReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LoginReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LoginReqValidationError) ErrorName() string { return "LoginReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e LoginReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLoginReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LoginReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LoginReqValidationError{}
+
+// Validate checks the field values on LoginRep with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *LoginRep) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Token
+
+	// no validation rules for RefreshToken
+
+	// no validation rules for ExpiresIn
+
+	return nil
+}
+
+// LoginRepValidationError is the validation error returned by
+// LoginRep.Validate if the designated constraints aren't met.
+type LoginRepValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LoginRepValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LoginRepValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LoginRepValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LoginRepValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LoginRepValidationError) ErrorName() string { return "LoginRepValidationError" }
+
+// Error satisfies the builtin error interface
+func (e LoginRepValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLoginRep.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LoginRepValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LoginRepValidationError{}

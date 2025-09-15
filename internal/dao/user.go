@@ -14,3 +14,12 @@ func GetUserList(db *gorm.DB) (users []*model.User, err error) {
 	}
 	return users, err
 }
+
+// GetUser 获取用户
+func GetUser(db *gorm.DB, userName string) (users *model.User, err error) {
+	err = db.Table((&model.User{}).Table()).Where("user_name", userName).Find(&users).Error
+	if err != nil {
+		log.Fatalf("get user error [%v]", err)
+	}
+	return users, err
+}

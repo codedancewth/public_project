@@ -1,11 +1,14 @@
 module github.com/codedancewth/public_project
 
-go 1.20
+go 1.21
+
+toolchain go1.23.0
 
 require (
 	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/gogo/protobuf v1.3.2
+	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/golang/protobuf v1.5.2
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.3
 	github.com/patrickmn/go-cache v2.1.0+incompatible
