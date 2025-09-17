@@ -4,12 +4,14 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"github.com/codedancewth/public_project/config"
 	"github.com/codedancewth/public_project/internal/service"
 	"github.com/codedancewth/public_project/middleware"
 	"github.com/codedancewth/public_project/proto/public_project"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
+	"log"
 	"net"
 	"net/http"
 )
@@ -35,6 +37,11 @@ func main() {
 	flag.StringVar(&configFile, "f", "", "Configuration file.")
 	flag.StringVar(&configFile, "c", "", "Configuration file.")
 	flag.Parse()
+
+	// 加载配置
+	if err := config.LoadConfig(); err != nil {
+		log.Fatalf("加载配置失败: %v", err)
+	}
 
 	// 初始化对应的中间件和配置
 	imp := service.NewAppService()
