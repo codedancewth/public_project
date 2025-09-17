@@ -298,3 +298,489 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = LoginRepValidationError{}
+
+// Validate checks the field values on RefreshTokenReq with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *RefreshTokenReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for RefreshToken
+
+	return nil
+}
+
+// RefreshTokenReqValidationError is the validation error returned by
+// RefreshTokenReq.Validate if the designated constraints aren't met.
+type RefreshTokenReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RefreshTokenReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RefreshTokenReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RefreshTokenReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RefreshTokenReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RefreshTokenReqValidationError) ErrorName() string { return "RefreshTokenReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e RefreshTokenReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRefreshTokenReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RefreshTokenReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RefreshTokenReqValidationError{}
+
+// Validate checks the field values on RefreshTokenRep with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *RefreshTokenRep) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Token
+
+	// no validation rules for ExpiresIn
+
+	return nil
+}
+
+// RefreshTokenRepValidationError is the validation error returned by
+// RefreshTokenRep.Validate if the designated constraints aren't met.
+type RefreshTokenRepValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RefreshTokenRepValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RefreshTokenRepValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RefreshTokenRepValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RefreshTokenRepValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RefreshTokenRepValidationError) ErrorName() string { return "RefreshTokenRepValidationError" }
+
+// Error satisfies the builtin error interface
+func (e RefreshTokenRepValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRefreshTokenRep.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RefreshTokenRepValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RefreshTokenRepValidationError{}
+
+// Validate checks the field values on LogoutReq with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *LogoutReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for RefreshToken
+
+	return nil
+}
+
+// LogoutReqValidationError is the validation error returned by
+// LogoutReq.Validate if the designated constraints aren't met.
+type LogoutReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LogoutReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LogoutReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LogoutReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LogoutReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LogoutReqValidationError) ErrorName() string { return "LogoutReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e LogoutReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLogoutReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LogoutReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LogoutReqValidationError{}
+
+// Validate checks the field values on LogoutRep with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *LogoutRep) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Message
+
+	return nil
+}
+
+// LogoutRepValidationError is the validation error returned by
+// LogoutRep.Validate if the designated constraints aren't met.
+type LogoutRepValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LogoutRepValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LogoutRepValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LogoutRepValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LogoutRepValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LogoutRepValidationError) ErrorName() string { return "LogoutRepValidationError" }
+
+// Error satisfies the builtin error interface
+func (e LogoutRepValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLogoutRep.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LogoutRepValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LogoutRepValidationError{}
+
+// Validate checks the field values on GetUserInfoReq with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *GetUserInfoReq) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// GetUserInfoReqValidationError is the validation error returned by
+// GetUserInfoReq.Validate if the designated constraints aren't met.
+type GetUserInfoReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUserInfoReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUserInfoReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUserInfoReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUserInfoReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUserInfoReqValidationError) ErrorName() string { return "GetUserInfoReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetUserInfoReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUserInfoReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUserInfoReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUserInfoReqValidationError{}
+
+// Validate checks the field values on GetUserInfoRep with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *GetUserInfoRep) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetUser()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetUserInfoRepValidationError{
+				field:  "User",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// GetUserInfoRepValidationError is the validation error returned by
+// GetUserInfoRep.Validate if the designated constraints aren't met.
+type GetUserInfoRepValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUserInfoRepValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUserInfoRepValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUserInfoRepValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUserInfoRepValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUserInfoRepValidationError) ErrorName() string { return "GetUserInfoRepValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetUserInfoRepValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUserInfoRep.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUserInfoRepValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUserInfoRepValidationError{}
+
+// Validate checks the field values on User with the rules defined in the proto
+// definition for this message. If any rules are violated, an error is returned.
+func (m *User) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Id
+
+	// no validation rules for UserName
+
+	// no validation rules for UserAccount
+
+	// no validation rules for Status
+
+	// no validation rules for CreatedTime
+
+	// no validation rules for UpdatedTime
+
+	// no validation rules for IsDeleted
+
+	return nil
+}
+
+// UserValidationError is the validation error returned by User.Validate if the
+// designated constraints aren't met.
+type UserValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UserValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UserValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UserValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UserValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UserValidationError) ErrorName() string { return "UserValidationError" }
+
+// Error satisfies the builtin error interface
+func (e UserValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUser.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UserValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UserValidationError{}

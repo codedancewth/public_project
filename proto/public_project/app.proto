@@ -5,6 +5,7 @@ option go_package = "github.com/codedancewth/public_project/internal/proto/publi
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "validate/validate.proto";
+import "google/protobuf/wrappers.proto";
 
 message HelloReq{
 }
@@ -23,9 +24,56 @@ message LoginRep {
   int64 expires_in = 3;
 }
 
+message RefreshTokenReq{
+  string refresh_token = 1;
+}
 
+message RefreshTokenRep {
+  string token = 1;
+  int64 expires_in = 2;
+}
+
+message LogoutReq{
+  string refresh_token = 1;
+}
+
+message LogoutRep {
+  string message = 1;
+}
+
+message GetUserInfoReq{
+}
+
+message GetUserInfoRep {
+  User user = 1;
+}
+
+// 用户信息
+message User {
+  int64 id = 1;                   // 用户ID
+  string user_name = 2;           // 用户名
+  string user_account = 3;        // 用户账号
+  int32 status = 4;               // 状态
+  int64 created_time = 5;         // 创建时间
+  int64 updated_time = 6;         // 更新时间
+  int32 is_deleted = 7;           // 是否删除
+}
 
 service AppService {
+  // 获取用户信息
+  rpc GetUserInfo(GetUserInfoReq) returns (GetUserInfoRep) {
+    option (google.api.http) = {
+      post:"/public_project/v1/get_user_info"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "获取用户信息"
+      description: "",
+      tags: ["out"]
+    };
+  };
+
+
   // 测试接口
   rpc Hello(HelloReq) returns (HelloRsp) {
     option (google.api.http) = {
@@ -38,7 +86,6 @@ service AppService {
       tags: ["out"]
     };
   };
-
 
   // 登录接口
   rpc Login(LoginReq) returns (LoginRep) {
@@ -53,4 +100,30 @@ service AppService {
     };
   };
 
+  // 获取登录令牌，若没有的话则可以不使用
+  rpc RefreshToken(RefreshTokenReq) returns (RefreshTokenRep) {
+    option (google.api.http) = {
+      post:"/public_project/v1/refresh_token"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "登录令牌"
+      description: "",
+      tags: ["out"]
+    };
+  };
+
+
+  // 登出接口
+  rpc Logout(LogoutReq) returns (LogoutRep) {
+    option (google.api.http) = {
+      post:"/public_project/v1/logout"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "登出接口"
+      description: "",
+      tags: ["out"]
+    };
+  };
 }

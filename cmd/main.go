@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/codedancewth/public_project/internal/service"
+	"github.com/codedancewth/public_project/middleware"
 	"github.com/codedancewth/public_project/proto/public_project"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/sirupsen/logrus"
@@ -39,7 +40,9 @@ func main() {
 	imp := service.NewAppService()
 
 	// start gRPC server
-	grpcServer := grpc.NewServer()
+	grpcServer := grpc.NewServer(
+		grpc.UnaryInterceptor(middleware.AuthInterceptor()),
+	)
 	public_project.RegisterAppServiceServer(grpcServer, imp)
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", getGrpcPort()))
 	if err != nil {

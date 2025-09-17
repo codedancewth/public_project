@@ -43,6 +43,33 @@
         ]
       }
     },
+    "/public_project/v1/get_user_info": {
+      "post": {
+        "summary": "获取用户信息",
+        "operationId": "AppService_GetUserInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/public_projectGetUserInfoRep"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/public_projectGetUserInfoReq"
+            }
+          }
+        ],
+        "tags": [
+          "out"
+        ]
+      }
+    },
     "/public_project/v1/login": {
       "post": {
         "summary": "登录接口",
@@ -69,9 +96,74 @@
           "out"
         ]
       }
+    },
+    "/public_project/v1/logout": {
+      "post": {
+        "summary": "登出接口",
+        "operationId": "AppService_Logout",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/public_projectLogoutRep"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/public_projectLogoutReq"
+            }
+          }
+        ],
+        "tags": [
+          "out"
+        ]
+      }
+    },
+    "/public_project/v1/refresh_token": {
+      "post": {
+        "summary": "登录令牌",
+        "operationId": "AppService_RefreshToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/public_projectRefreshTokenRep"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/public_projectRefreshTokenReq"
+            }
+          }
+        ],
+        "tags": [
+          "out"
+        ]
+      }
     }
   },
   "definitions": {
+    "public_projectGetUserInfoRep": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/public_projectUser"
+        }
+      }
+    },
+    "public_projectGetUserInfoReq": {
+      "type": "object"
+    },
     "public_projectHelloReq": {
       "type": "object"
     },
@@ -103,6 +195,74 @@
           "type": "string"
         }
       }
+    },
+    "public_projectLogoutRep": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "public_projectLogoutReq": {
+      "type": "object",
+      "properties": {
+        "refresh_token": {
+          "type": "string"
+        }
+      }
+    },
+    "public_projectRefreshTokenRep": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "expires_in": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "public_projectRefreshTokenReq": {
+      "type": "object",
+      "properties": {
+        "refresh_token": {
+          "type": "string"
+        }
+      }
+    },
+    "public_projectUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "user_name": {
+          "type": "string"
+        },
+        "user_account": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "created_time": {
+          "type": "string",
+          "format": "int64"
+        },
+        "updated_time": {
+          "type": "string",
+          "format": "int64"
+        },
+        "is_deleted": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "用户信息"
     }
   }
 }

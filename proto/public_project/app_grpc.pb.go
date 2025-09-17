@@ -22,10 +22,16 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AppServiceClient interface {
+	// 获取用户信息
+	GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoRep, error)
 	// 测试接口
 	Hello(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*HelloRsp, error)
 	// 登录接口
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginRep, error)
+	// 获取登录令牌，若没有的话则可以不使用
+	RefreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenRep, error)
+	// 登出接口
+	Logout(ctx context.Context, in *LogoutReq, opts ...grpc.CallOption) (*LogoutRep, error)
 }
 
 type appServiceClient struct {
@@ -34,6 +40,15 @@ type appServiceClient struct {
 
 func NewAppServiceClient(cc grpc.ClientConnInterface) AppServiceClient {
 	return &appServiceClient{cc}
+}
+
+func (c *appServiceClient) GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoRep, error) {
+	out := new(GetUserInfoRep)
+	err := c.cc.Invoke(ctx, "/protocol.public_project.AppService/GetUserInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *appServiceClient) Hello(ctx context.Context, in *HelloReq, opts ...grpc.CallOption) (*HelloRsp, error) {
@@ -54,14 +69,38 @@ func (c *appServiceClient) Login(ctx context.Context, in *LoginReq, opts ...grpc
 	return out, nil
 }
 
+func (c *appServiceClient) RefreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenRep, error) {
+	out := new(RefreshTokenRep)
+	err := c.cc.Invoke(ctx, "/protocol.public_project.AppService/RefreshToken", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appServiceClient) Logout(ctx context.Context, in *LogoutReq, opts ...grpc.CallOption) (*LogoutRep, error) {
+	out := new(LogoutRep)
+	err := c.cc.Invoke(ctx, "/protocol.public_project.AppService/Logout", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppServiceServer is the server API for AppService service.
 // All implementations must embed UnimplementedAppServiceServer
 // for forward compatibility
 type AppServiceServer interface {
+	// 获取用户信息
+	GetUserInfo(context.Context, *GetUserInfoReq) (*GetUserInfoRep, error)
 	// 测试接口
 	Hello(context.Context, *HelloReq) (*HelloRsp, error)
 	// 登录接口
 	Login(context.Context, *LoginReq) (*LoginRep, error)
+	// 获取登录令牌，若没有的话则可以不使用
+	RefreshToken(context.Context, *RefreshTokenReq) (*RefreshTokenRep, error)
+	// 登出接口
+	Logout(context.Context, *LogoutReq) (*LogoutRep, error)
 	mustEmbedUnimplementedAppServiceServer()
 }
 
@@ -69,11 +108,20 @@ type AppServiceServer interface {
 type UnimplementedAppServiceServer struct {
 }
 
+func (UnimplementedAppServiceServer) GetUserInfo(context.Context, *GetUserInfoReq) (*GetUserInfoRep, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfo not implemented")
+}
 func (UnimplementedAppServiceServer) Hello(context.Context, *HelloReq) (*HelloRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
 }
 func (UnimplementedAppServiceServer) Login(context.Context, *LoginReq) (*LoginRep, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
+func (UnimplementedAppServiceServer) RefreshToken(context.Context, *RefreshTokenReq) (*RefreshTokenRep, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
+}
+func (UnimplementedAppServiceServer) Logout(context.Context, *LogoutReq) (*LogoutRep, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
 }
 func (UnimplementedAppServiceServer) mustEmbedUnimplementedAppServiceServer() {}
 
@@ -86,6 +134,24 @@ type UnsafeAppServiceServer interface {
 
 func RegisterAppServiceServer(s grpc.ServiceRegistrar, srv AppServiceServer) {
 	s.RegisterService(&AppService_ServiceDesc, srv)
+}
+
+func _AppService_GetUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppServiceServer).GetUserInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.public_project.AppService/GetUserInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppServiceServer).GetUserInfo(ctx, req.(*GetUserInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _AppService_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -124,6 +190,42 @@ func _AppService_Login_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppService_RefreshToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RefreshTokenReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppServiceServer).RefreshToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.public_project.AppService/RefreshToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppServiceServer).RefreshToken(ctx, req.(*RefreshTokenReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AppService_Logout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LogoutReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppServiceServer).Logout(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protocol.public_project.AppService/Logout",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppServiceServer).Logout(ctx, req.(*LogoutReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppService_ServiceDesc is the grpc.ServiceDesc for AppService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -132,12 +234,24 @@ var AppService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AppServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "GetUserInfo",
+			Handler:    _AppService_GetUserInfo_Handler,
+		},
+		{
 			MethodName: "Hello",
 			Handler:    _AppService_Hello_Handler,
 		},
 		{
 			MethodName: "Login",
 			Handler:    _AppService_Login_Handler,
+		},
+		{
+			MethodName: "RefreshToken",
+			Handler:    _AppService_RefreshToken_Handler,
+		},
+		{
+			MethodName: "Logout",
+			Handler:    _AppService_Logout_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

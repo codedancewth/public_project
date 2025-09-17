@@ -1,15 +1,19 @@
 package utils
 
 import (
+	"encoding/hex"
+	"math/rand"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 )
 
+const TokenExpiredIn = 15 * 60
+
 var JWTSecret = []byte("your-secret-key") // 生产环境应从环境变量获取
 
 type Claims struct {
-	UserID   uint   `json:"user_id"`
+	UserID   uint   `json:"userId"`
 	Username string `json:"username"`
 	jwt.RegisteredClaims
 }
@@ -49,8 +53,11 @@ func ParseToken(tokenString string) (*Claims, error) {
 	return nil, jwt.ErrSignatureInvalid
 }
 
-// GenerateRefreshToken 生成刷新令牌（简单实现，实际应更复杂）
-func GenerateRefreshToken() string {
-	// 实际应用中应使用更安全的方法生成
-	return jwt.NewString() // 这是一个伪代码，实际应使用安全的随机生成方法
+// GenerateRefreshToken 生成安全的刷新令牌
+func GenerateRefreshToken() (string, error) {
+	bytes := make([]byte, 32) // 生成32字节的随机数
+	if _, err := rand.Read(bytes); err != nil {
+		return "", err
+	}
+	return hex.EncodeToString(bytes), nil
 }

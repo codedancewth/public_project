@@ -1,5 +1,7 @@
 package model
 
+import "golang.org/x/crypto/bcrypt"
+
 // User 用户模型
 type User struct {
 	ID           int64  `gorm:"primaryKey"`
@@ -14,4 +16,19 @@ type User struct {
 
 func (u *User) Table() string {
 	return "user"
+}
+
+// HashPassword 加密密码
+func (u *User) HashPassword() error {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.UserPassword), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	u.UserPassword = string(hashedPassword)
+	return nil
+}
+
+// CheckPassword 验证密码
+func (u *User) CheckPassword(password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(u.UserPassword), []byte(password))
 }
