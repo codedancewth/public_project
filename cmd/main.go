@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/codedancewth/public_project/config"
 	"github.com/codedancewth/public_project/internal/service"
+	"github.com/codedancewth/public_project/kafka"
 	"github.com/codedancewth/public_project/middleware"
 	"github.com/codedancewth/public_project/proto/public_project"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -45,6 +46,12 @@ func main() {
 
 	// 初始化对应的中间件和配置
 	imp := service.NewAppService()
+
+	defaultConfig := kafka.DefaultConfig()
+	// 初始化mq
+	// 生产者
+	kafka.RunProducer(defaultConfig)
+	kafka.RunConsumer(defaultConfig)
 
 	// start gRPC server
 	grpcServer := grpc.NewServer(
