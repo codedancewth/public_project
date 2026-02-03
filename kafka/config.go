@@ -17,7 +17,7 @@ type Config struct {
 // DefaultConfig 默认配置
 func DefaultConfig() *Config {
 	return &Config{
-		Broker:  "xxxxx:port", // 你的云服务器地址
+		Broker:  "127.0.0.1:9092", // 本地Kafka服务，如果没有则不会连接
 		Topic:   "quickstart-events",
 		GroupID: "go-consumer-group",
 	}

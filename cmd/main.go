@@ -47,11 +47,19 @@ func main() {
 	// 初始化对应的中间件和配置
 	imp := service.NewAppService()
 
+	// 初始化 Kafka (如果可用)
 	defaultConfig := kafka.DefaultConfig()
-	// 初始化mq
-	// 生产者
-	kafka.RunProducer(defaultConfig)
-	kafka.RunConsumer(defaultConfig)
+	go func() {
+		defer func() {
+			if r := recover(); r != nil {
+				fmt.Printf("Kafka 初始化失败，服务将继续运行: %v\n", r)
+			}
+		}()
+		// 初始化mq
+		// 生产者
+		kafka.RunProducer(defaultConfig)
+		kafka.RunConsumer(defaultConfig)
+	}()
 
 	// start gRPC server
 	grpcServer := grpc.NewServer(
